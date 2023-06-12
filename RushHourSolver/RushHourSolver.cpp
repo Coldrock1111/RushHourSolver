@@ -3,18 +3,14 @@
 #include <cstdlib>
 #include <string>
 #include <string.h>
+#include <fstream>
 
 using namespace std;
 int main()
 {
     //0=empty, 1=vertical 2 length, 2=horizontal 2 length, 3=vertical 3 length, 4=horizontal 3 length
     
-    string row1 = "444133";
-    string row2 = "122133";
-    string row3 = "102233"; //goal here
-    string row4 = "221000";
-    string row5 = "011022";
-    string row6 = "012222";
+    string initialBoard;
 
     
     string row1 = "444113";
@@ -31,7 +27,7 @@ int main()
     inputFile.open("Text.txt");
     //inputFile >> initialBoard;
     inputFile.close();
-
+    
     string activeBoards[12000];
     string activeMoveList[12000];
     string currentBoard;
@@ -52,14 +48,10 @@ int main()
     while (!pathFound) 
     {
         int x = 0;
-        while (activeBoardsUnused < 12000)
+        while (activeBoardsUnused < 11999)
         {
             currentBoardIndex++;
             currentBoard = activeBoards[currentBoardIndex];
-            //finds all possible moves by checking each empty cell, checking adjacent cells, and if there is a vehicle which is pointing towards it
-            //output the movement in the form [startIndex][movementAmount]. this is then repeated to move all cells which the vehicle occupies. 
-            //important to note, since the board is stored as a pure string of numbers, +-6 is going up and down a row. if statements are nested
-            //in some cases in order to prevent searching for numbers outside the string bounds
             availableMoveCount = 0;
             availableMoves = "";
             for (int index = 0; index < 36; index++) 
@@ -186,18 +178,21 @@ int main()
         }
         if (!pathFound) 
         {
-            activeBoards[0] = activeBoards[11999];
-            pathMoveList = activeMoveList[11999];
+            activeBoards[0] = activeBoards[11998];
+            pathMoveList = activeMoveList[11998];
             activeBoardsUnused = 1;
             currentBoardIndex = -1;
         }
     }
 
     cout << pathMoveList << endl;
-    
+    outputFile.open("output.txt");
+    outputFile << pathMoveList;
+    outputFile.close();
+
     for (int i = 0; i < pathMoveList.size(); i+=4) 
     {
-        cout << "(" << ((pathMoveList[i] - 48) * 10 + (pathMoveList[i + 1] - 48)) % 6 << ", " << ((pathMoveList[i] - 48) * 10 + (pathMoveList[i + 1] - 48)) / 6 << ")";
+        cout << "(" << ((pathMoveList[i] - 48) * 10 + (pathMoveList[i + 1] - 48)) % 6 + 1 << ", " << ((pathMoveList[i] - 48) * 10 + (pathMoveList[i + 1] - 48)) / 6 + 1<< ")";
 
         if (pathMoveList[i + 2] == '-') 
         {
@@ -224,6 +219,8 @@ int main()
         cout << " : ";
         if (i % 10 == 0) cout << endl;
     }
+
+    cout << endl << pathMoveList.length() / 4 << endl;
 
     system("PAUSE");
 }
