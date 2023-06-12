@@ -16,7 +16,21 @@ int main()
     string row5 = "011022";
     string row6 = "012222";
 
-    string initialBoard = row1 + row2 + row3 + row4 + row5 + row6;
+    
+    string row1 = "444113";
+    string row2 = "122113";
+    string row3 = "100223"; //goal here
+    string row4 = "220000";
+    string row5 = "001122";
+    string row6 = "221122";
+    initialBoard = row1 + row2 + row3 + row4 + row5 + row6;
+    
+    
+    ifstream inputFile;
+    ofstream outputFile;
+    inputFile.open("Text.txt");
+    //inputFile >> initialBoard;
+    inputFile.close();
 
     string activeBoards[12000];
     string activeMoveList[12000];
