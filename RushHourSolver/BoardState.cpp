@@ -6,6 +6,11 @@ using namespace std;
 //standard constructor
 BoardState::BoardState() 
 {
+	boardArray = new int* [6];
+	for (int i = 0; i < 6; i++)
+	{
+		boardArray[i] = new int[6];
+	}
 	for (int x = 0; x < 6; x++)
 	{
 		for (int y = 0; y < 6; y++)
@@ -15,8 +20,13 @@ BoardState::BoardState()
 	}
 }
 //constructor for a given board (used for initial board)
-BoardState::BoardState(int boardArray[6][6])
+BoardState::BoardState(int** boardArray)
 {
+	this->boardArray= new int* [6];
+	for (int i = 0; i < 6; i++)
+	{
+		this->boardArray[i] = new int[6];
+	}
 	for (int x = 0; x < 6; x++) 
 	{
 		for (int y = 0; y < 6; y++) 
@@ -26,8 +36,13 @@ BoardState::BoardState(int boardArray[6][6])
 	}
 }
 //constructor given board and solution path. Used when propogating next move
-BoardState::BoardState(int boardArray[6][6], string solutionString)
+BoardState::BoardState(int** boardArray, string solutionString)
 {
+	this->boardArray = new int* [6];
+	for (int i = 0; i < 6; i++)
+	{
+		this->boardArray[i] = new int[6];
+	}
 	for (int x = 0; x < 6; x++)
 	{
 		for (int y = 0; y < 6; y++)
@@ -38,7 +53,7 @@ BoardState::BoardState(int boardArray[6][6], string solutionString)
 	this->solutionString = solutionString;
 }
 //sets the board state
-void BoardState::SetState(int boardArray[6][6])
+void BoardState::SetState(int** boardArray)
 {
 	for (int x = 0; x < 6; x++)
 	{
@@ -111,7 +126,12 @@ BoardState BoardState::ApplyMove(string move)
 	int x = move[1] - 48;
 	int y = move[0] - 48;
 	int length;
-	int output[6][6];
+	int** output;
+	output = new int* [6];
+	for (int i = 0; i < 6; i++)
+	{
+		output[i] = new int[6];
+	}
 
 	for (int x = 0; x < 6; x++)
 	{

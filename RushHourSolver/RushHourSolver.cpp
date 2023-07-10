@@ -10,19 +10,34 @@
 
 using namespace std;
 
-bool CompareArrays(int[6][6], int[6][6]);
+bool CompareArrays(int**, int**);
 
 int main() 
 {
-    int initialBoard[6][6] =
+    int** initialBoard;
+    initialBoard = new int* [6];
+    for (int i = 0; i < 6; i++)
     {
-        {3, 1, 2, 2, 1, 0},
-        {3, 1, 1, 0, 1, 3},
-        {3, 0, 1, 2, 2, 3},
-        {4, 4, 4, 1, 0, 3},
-        {0, 0, 1, 1, 2, 2},
-        {2, 2, 1, 2, 2, 0}
+        initialBoard[i] = new int[6];
+    }
+
+    int initialBoardArray[6][6] =
+    {
+        { 3, 1, 2, 2, 1, 0 },
+        { 3, 1, 1, 0, 1, 3 },
+        { 3, 0, 1, 2, 2, 3 },
+        { 4, 4, 4, 1, 0, 3 },
+        { 0, 0, 1, 1, 2, 2 },
+        { 2, 2, 1, 2, 2, 0 }
     };
+
+    for (int y = 0; y < 6; y++) 
+    {
+        for (int x = 0; x < 6; x++)
+        {
+            initialBoard[y][x] = initialBoardArray[y][x];
+        }
+    }
 
     ifstream inputFile;
     ofstream outputFile;
@@ -46,9 +61,8 @@ int main()
     string move;
 
     //store all board objects in an effectively infinite array in the heap
-    BoardState * allBoards = new BoardState[100000];
+    BoardState * allBoards = new BoardState[30000];
     allBoards[0].SetState(initialBoard);
-
 
 
     while (!solutionFound) 
@@ -93,7 +107,7 @@ int main()
     system("PAUSE");
 }
 //no clue why its so difficult to compare arrays
-bool CompareArrays(int first[6][6], int second[6][6])
+bool CompareArrays(int** first, int** second)
 {
     for (int i = 0; i < 6; i++) 
     {

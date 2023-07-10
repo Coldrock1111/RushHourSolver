@@ -6,14 +6,14 @@ using namespace std;
 class BoardState
 {
 public:	
-	int boardArray[6][6];
+	int** boardArray;
 	string solutionString;
 
 	BoardState();
-	BoardState(int boardArray[6][6]);
-	BoardState(int boardArray[6][6], string solutionString);
+	BoardState(int** boardArray);
+	BoardState(int** boardArray, string solutionString);
 
-	void SetState(int boardArray[6][6]);
+	void SetState(int** boardArray);
 	string AvailableMoves();
 	BoardState ApplyMove(string move);
 
