@@ -7,6 +7,7 @@
 #include "BoardState.h"
 
 //I added comments just for you mark :)
+//Adjusted to use pointers instead of arrays.... which didnt work on robotc so rip
 
 using namespace std;
 
