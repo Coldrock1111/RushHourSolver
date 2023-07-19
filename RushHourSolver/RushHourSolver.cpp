@@ -26,7 +26,8 @@ int main()
 
     ifstream inputFile;
     ofstream outputFile;
-    inputFile.open("Text.txt");
+    inputFile.open("Puzzle.txt");
+    outputFile.open("SolutionMoves.txt");
     /*
     for (int x = 0; x < 6; x++) 
     {
@@ -88,6 +89,118 @@ int main()
         }
         //move to next board
         allBoardsIndex++;
+    }
+    for (int i = 0; i < solutionString.length() - 6; i+=3)
+    {
+        int checkCoordinates[2] = { solutionString[i] - 48, solutionString[i+1] - 48 };
+        int nextCoordinates[2] = { solutionString[i+3] - 48, solutionString[i + 4] - 48 };
+        int offset = 0;
+        switch (solutionString[i + 2]) 
+        {
+        case 'l':
+            offset++;
+        case 'D':
+            offset++;
+        case 'd':
+            offset++;
+            if (nextCoordinates[0] == checkCoordinates[0] && nextCoordinates[1] == checkCoordinates[1] + offset) 
+            {
+                solutionString.erase(i + 3, 3);
+                switch (offset) 
+                {
+                case 1:
+                    solutionString[i + 2] = 'D';
+                    break;
+                case 2:
+                    solutionString[i + 2] = 'l';
+                    break;
+                case 3:
+                    solutionString[i + 2] = 'L';
+                    break;
+                }
+                i -= 3;
+            }
+            break;
+        case 'j':
+            offset++;
+        case 'A':
+            offset++;
+        case 'a':
+            offset++;
+            if (nextCoordinates[0] == checkCoordinates[0] && nextCoordinates[1] == checkCoordinates[1] - offset)
+            {
+                solutionString.erase(i + 3, 3);
+                switch (offset)
+                {
+                case 1:
+                    solutionString[i + 2] = 'A';
+                    break;
+                case 2:
+                    solutionString[i + 2] = 'j';
+                    break;
+                case 3:
+                    solutionString[i + 2] = 'J';
+                    break;
+                }
+                i -= 3;
+            }
+            break;
+        case 'i':
+            offset++;
+        case 'W':
+            offset++;
+        case 'w':
+            offset++;
+            if (nextCoordinates[0] == checkCoordinates[0] - offset && nextCoordinates[1] == checkCoordinates[1])
+            {
+                solutionString.erase(i + 3, 3);
+                switch (offset)
+                {
+                case 1:
+                    solutionString[i + 2] = 'W';
+                    break;
+                case 2:
+                    solutionString[i + 2] = 'i';
+                    break;
+                case 3:
+                    solutionString[i + 2] = 'I';
+                    break;
+                }
+                i -= 3;
+            }
+            break;
+        case 'k':
+            offset++;
+        case 'S':
+            offset++;
+        case 's':
+            offset++;
+            if (nextCoordinates[0] == checkCoordinates[0] + offset && nextCoordinates[1] == checkCoordinates[1])
+            {
+                solutionString.erase(i + 3, 3);
+                switch (offset)
+                {
+                case 1:
+                    solutionString[i + 2] = 'S';
+                    break;
+                case 2:
+                    solutionString[i + 2] = 'k';
+                    break;
+                case 3:
+                    solutionString[i + 2] = 'K';
+                    break;
+                }
+                i -= 3;
+            }
+            break;
+        }
+    }
+    cout << solutionString.length() / 3 << endl;
+    for (int i = 0; i < solutionString.length(); i++) 
+    {
+        outputFile << solutionString[i] << " ";
+        outputFile << solutionString[++i] << " ";
+        outputFile << solutionString[++i] << endl;
     }
     cout << solutionString << endl;
     system("PAUSE");

@@ -68,7 +68,7 @@ string BoardState::AvailableMoves()
 					{
 						moves += to_string(y);
 						moves += to_string(x - 1);
-						moves += 'r';
+						moves += 'd';
 					}
 				}
 				if (x < 4)
@@ -77,7 +77,7 @@ string BoardState::AvailableMoves()
 					{
 						moves += to_string(y);
 						moves += to_string(x + 1);
-						moves += 'l';
+						moves += 'a';
 					}
 				}
 				if (y > 1)
@@ -86,7 +86,7 @@ string BoardState::AvailableMoves()
 					{
 						moves += to_string(y - 1);
 						moves += to_string(x);
-						moves += 'd';
+						moves += 's';
 					}
 				}
 				if (y < 4)
@@ -95,7 +95,7 @@ string BoardState::AvailableMoves()
 					{
 						moves += to_string(y + 1);
 						moves += to_string(x);
-						moves += 'u';
+						moves += 'w';
 					}
 				}
 			}
@@ -112,6 +112,7 @@ BoardState BoardState::ApplyMove(string move)
 	int y = move[0] - 48;
 	int length;
 	int output[6][6];
+	string moveString = "";
 
 	for (int x = 0; x < 6; x++)
 	{
@@ -124,7 +125,7 @@ BoardState BoardState::ApplyMove(string move)
 	//check direction
 	switch (move[2])
 	{
-	case 'r':
+	case 'd':
 		//find length( 1/2 -> 2, 3/4 -> 3)
 		length = (boardArray[y][x] + 3) / 2;
 		for (int i = 0; i < length; i++) 
@@ -134,40 +135,52 @@ BoardState BoardState::ApplyMove(string move)
 		}
 		//replace the 'back' coordinate to empty
 		output[y][x - length + 1] = 0;
+		moveString += to_string(y);
+		moveString += to_string(x - length + 1);
+		moveString += move[2];
 		break;
 
-	case 'l':
+	case 'a':
 		length = (boardArray[y][x] + 3) / 2;
 		for (int i = 0; i < length; i++)
 		{
 			output[y][x + i - 1] = boardArray[y][x];
 		}
 		output[y][x + length - 1] = 0;
+		moveString += to_string(y);
+		moveString += to_string(x + length - 1);
+		moveString += move[2];
 		break;
 
-	case 'u':
+	case 'w':
 		length = (boardArray[y][x] + 3) / 2;
 		for (int i = 0; i < length; i++)
 		{
 			output[y + i - 1][x] = boardArray[y][x];
 		}
 		output[y + length - 1][x] = 0;
+		moveString += to_string(y + length - 1);
+		moveString += to_string(x);
+		moveString += move[2];
 		break;
 
-	case 'd':
+	case 's':
 		length = (boardArray[y][x] + 3) / 2;
 		for (int i = 0; i < length; i++)
 		{
 			output[y - i + 1][x] = boardArray[y][x];
 		}
 		output[y - length + 1][x] = 0;
+		moveString += to_string(y - length + 1);
+		moveString += to_string(x);
+		moveString += move[2];
 		break;
 
 	default:
 		break;
 	}
 	//store the new board array and updated solution into an object to be returned
-	BoardState returnObj(output, solutionString + move);
+	BoardState returnObj(output, solutionString + moveString);
 	return returnObj;
 
 }
