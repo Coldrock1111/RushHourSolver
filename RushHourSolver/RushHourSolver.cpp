@@ -6,8 +6,6 @@
 #include <fstream>
 #include "BoardState.h"
 
-//I added comments just for you mark :)
-
 using namespace std;
 
 bool CompareArrays(int[6][6], int[6][6]);
@@ -16,12 +14,12 @@ int main()
 {
     int initialBoard[6][6] =
     {
-        {3, 1, 2, 2, 1, 0},
-        {3, 1, 1, 0, 1, 3},
-        {3, 0, 1, 2, 2, 3},
-        {4, 4, 4, 1, 0, 3},
-        {0, 0, 1, 1, 2, 2},
-        {2, 2, 1, 2, 2, 0}
+        {0, 0, 4, 4, 4, 0},
+        {0, 0, 0, 3, 1, 0},
+        {2, 2, 0, 3, 1, 0},
+        {0, 0, 0, 3, 1, 0},
+        {0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 2, 2, 0}
     };
 
     ifstream inputFile;
@@ -66,12 +64,29 @@ int main()
             //apply the extracted move and store in the next available location
             allBoards[availableBoardsIndex] = allBoards[allBoardsIndex].ApplyMove(move);
             //check if solution has been found
-            for (int j = 5; j > 1; j--)
+            for (int j = 5; j >= 1; j--)
             {
                 if (allBoards[availableBoardsIndex].boardArray[2][j] == 2)
                 {
                     solutionFound = true;
                     solutionString = allBoards[availableBoardsIndex].solutionString;
+                    solutionString += "2";
+                    solutionString += to_string(j-1);
+                    switch (j) 
+                    {
+                    case 1:
+                        solutionString += "L";
+                        break;
+                    case 2:
+                        solutionString += "l";
+                        break;
+                    case 3:
+                        solutionString += "D";
+                        break;
+                    case 4:
+                        solutionString += "d";
+                        break;
+                    }
                     break;
                 }
                 else if (allBoards[availableBoardsIndex].boardArray[2][j] != 0) break;
